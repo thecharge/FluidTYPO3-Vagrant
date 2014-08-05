@@ -61,10 +61,10 @@ Create a PR.
 ### FAQ
 
 #### I have a problem with windows and vagrant.
-- it should work, maybe you need rsync or alternatively comment out the rsync line
+- It should work, maybe you need rsync or alternatively comment out the rsync line
 
 #### Initial download volume?
-- Frist time 420 MB for cache vagrant box and 450 MB each complete vagrant up
+- First time 420 MB for cache vagrant box and 450 MB each complete vagrant up
 
 #### Build time
 - Depends on a lot of factors. HDD speed, connection speed<br />

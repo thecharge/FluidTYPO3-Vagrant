@@ -114,7 +114,7 @@ class typo3 {
 		require => Load_extension['vhs'],
 	}
 
-	load_extension { ['builder', 'fluidcontent', 'fluidcontent_core', 'fluidpages', 'fluidtypo3', 'schemaker', 'view']:
+	load_extension { ['builder', 'fluidcontent', 'fluidcontent_core', 'fluidpages', 'fluidtypo3', 'view']:
 		require => Load_extension['flux'],
 	}
 

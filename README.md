@@ -68,7 +68,7 @@ Create a PR.
 
 #### Build time
 - Depends on a lot of factors. HDD speed, connection speed<br />
-```vagrant up``` ~8min 30sec (install/start VM + first provision 420 sec)<br />
+```vagrant up``` ~7min 30sec (install/start VM + first provision 360 sec)<br />
 ```vagrant provision``` ~60 seconds
 
 #### Any way to improve with a slow connection?

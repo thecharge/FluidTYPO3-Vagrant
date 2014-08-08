@@ -1,5 +1,12 @@
 class defaultpackage {
-	package { ['htop', 'iftop', 'pwgen', 'mytop', 'git', 'wget', 'curl', 'multitail', 'iotop', 'augeas-tools', 'libaugeas-ruby', 'linux-headers-amd64', 'rsync']:
-		ensure => present
+	package { ['htop', 'iftop', 'pwgen', 'mytop', 'wget', 'curl', 'multitail', 'iotop', 'augeas-tools', 'libaugeas-ruby', 'linux-headers-amd64', 'rsync']:
+		ensure => present,
 	}
+
+	exec { 'git-backports':
+		command => '/usr/bin/apt-get -t wheezy-backports -y -q install git',
+	}
+
+	Exec['apt-update'] -> Exec['git-backports'] -> Vcsrepo <| |>
+
 }

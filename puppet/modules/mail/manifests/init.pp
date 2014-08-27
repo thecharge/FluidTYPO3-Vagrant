@@ -7,7 +7,7 @@ class mail {
 	user { 'development':
 		ensure => present,
 		shell => '/bin/sh',
-		password => 'devel',
+		password => 'password',
 		groups => 'mail',
 		managehome => true,
 	}
@@ -39,7 +39,7 @@ class mail {
 
 	file { '/etc/dovecot/users':
 		ensure => present,
-		content => 'development:{PLAIN}devel:1001:8::/home/development:userdb_mail=mbox:~/mail:INBOX=/var/mail/%u',
+		content => 'development:{PLAIN}password:1001:8::/home/development:userdb_mail=mbox:~/mail:INBOX=/var/mail/%u',
 		require => Package['dovecot-imapd'],
 	}
 

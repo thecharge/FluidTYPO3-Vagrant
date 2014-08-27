@@ -27,7 +27,7 @@ Have fun :)
     * Opcache http://host/opcache-dashboard.php
     * OpCacheGUI http://host/OpCacheGUI
 + roundcubemail http://host/webmail - All mails are send to development@localhost
-    * Login via development Password devel
+    * Login via development Password password
 - Cronjob for scheduler
 - Codesniffer with FluidTYPO3 standard
 
@@ -44,15 +44,19 @@ phpcs -n --standard=FluidTYPO3 --extensions=php /var/www/typo3conf/ext/builder
 ### Credentials
 TYPO3
 - User: admin
-- Password/Installtool: development
+- Password/Installtool: password
 
 MySQL
 - User: root
-- Password: devel
+- Password: password
 
 Database typo3
 - User: typo3
-- Password: devel
+- Password: password
+
+Mail
+- User: development
+- Password: password
 
 ### Contributing
 Create a PR.

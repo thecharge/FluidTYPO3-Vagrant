@@ -1,5 +1,5 @@
 class { '::mysql::server':
-	root_password => 'devel'
+	root_password => 'password'
 }
 
 include apt

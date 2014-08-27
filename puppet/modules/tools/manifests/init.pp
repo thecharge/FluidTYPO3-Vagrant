@@ -50,7 +50,7 @@ class tools {
 
 	mysql::db { 'roundcube':
 		user => 'roundcube',
-		password => 'devel',
+		password => 'password',
 		host => 'localhost',
 		grant => ['all'],
 		charset => 'utf8',
@@ -58,7 +58,7 @@ class tools {
 	}
 
 	exec { 'roundcube-sql-import':
-		command => '/usr/bin/mysql -u roundcube -pdevel roundcube < /usr/share/php/roundcubemail/SQL/mysql.initial.sql',
+		command => '/usr/bin/mysql -u roundcube -ppassword roundcube < /usr/share/php/roundcubemail/SQL/mysql.initial.sql',
 		require => [Vcsrepo['/usr/share/php/roundcubemail'], Mysql::Db['roundcube']],
 		onlyif => '/usr/bin/test ! -e /usr/share/php/roundcubemail/config/config.inc.php',
 	}

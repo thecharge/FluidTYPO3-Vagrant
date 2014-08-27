@@ -2,11 +2,11 @@
 
 HOST=http://localhost/
 DATABASE_USER=typo3
-DATABASE_PASSWORD=devel
+DATABASE_PASSWORD=password
 DATABASE=typo3
 SITENAME=FluidTYPO3
 ADMIN_USER=admin
-ADMIN_PASSWORD=development
+ADMIN_PASSWORD=password
 TRUSTED_HOSTS_PATTERN=.*
 
 setHash () {

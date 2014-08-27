@@ -33,7 +33,7 @@ class typo3 {
 
 		mysql::db { 'typo3':
 			user => 'typo3',
-			password => 'devel',
+			password => 'password',
 			host => 'localhost',
 			grant => ['all'],
 			charset => 'utf8',

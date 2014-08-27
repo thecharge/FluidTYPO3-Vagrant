@@ -37,9 +37,9 @@ phpcs -n --standard=FluidTYPO3 --extensions=php /var/www/typo3conf/ext/builder
 ```
 
 ### Requirements
-- Linux (tested) or Mac
+- Linux, Mac are tested. We got positive feedback from Windows user - Please take a look at FAQ section
 - For installation Internet connection with enough broadband
-- Only tested Virtualbox
+- We only test with the provider Virtualbox
 
 ### Credentials
 TYPO3
@@ -60,11 +60,11 @@ Create a PR.
 
 ### FAQ
 
-#### I have a problem with windows and vagrant.
-- It should work, maybe you need rsync or alternatively comment out the rsync line
+#### Do we support Windows as host?
+- We got positive feedback from Windows users. Please take a look in [offical documention|http://docs.vagrantup.com/v2/synced-folders/rsync.html] for rsync support under Windows or comment it out.
 
 #### Initial download volume?
-- First time 420 MB for cache vagrant box and 450 MB each complete vagrant up
+- First time 420 MB for cache vagrant box and 150 MB each complete vagrant up
 
 #### Build time
 - Depends on a lot of factors. HDD speed, connection speed<br />

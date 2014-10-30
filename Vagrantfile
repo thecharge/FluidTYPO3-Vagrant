@@ -1,19 +1,30 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = '2'
-
+DOCUMENT_ROOT = '/var/www'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.box = 'puphpet/debian75-x64'
 
-	# Add you network card for the bridge or vagrant ask you every start
-	config.vm.network 'public_network'
+	# Activate if your box need to be available in local network
+	#config.vm.network 'public_network'
+
+	# Change ip: '172.23.23.23' to run more than one VM or replace it with type: 'dhcp' if you need
+	config.vm.network 'private_network', ip: '172.23.23.23'
 
 	# If true, then any SSH connections made will enable agent forwarding.
 	# Default value: false
 	config.ssh.forward_agent = true
 
+	#Disable default mount
+	config.vm.synced_folder '.', '/vagrant', :disabled => true
+	config.vm.synced_folder 'utils', '/vagrant'
+
 	# Share an additional folder to the guest VM.
 	# Sync local folders in VM and ignore git folders.
-	config.vm.synced_folder 'data/ext/', '/var/www/typo3conf/ext/', type: 'rsync', rsync__auto: true, id: 'fluidTYPO3'
+
+	config.vm.synced_folder 'data', DOCUMENT_ROOT, id: 'fluidTYPO3', type: 'nfs',
+			mount_options: ['rw', 'vers=3', 'tcp']
+			# Comment in and run vagrant reload and NFS has a cache server.
+			#mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
 
 	config.vm.provider 'virtualbox' do |vb|
 		# Disable headless mode
@@ -29,8 +40,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		puppet.module_path    = 'puppet/modules'
 		puppet.options = '--hiera_config /vagrant/hiera.yaml'
 		puppet.facter = {
-			'document_root' => '/var/www',
-			'fqdn' => 'fluidtypo3.dev',
+			'fluidtypo3_branch' => 'development',
+			'document_root' => DOCUMENT_ROOT,
+			'fqdn' => 'dev.fluidtypo3.org',
 			'typo3_branch' => 'TYPO3_6-2',
 			'operatingsystem' => 'Debian',
 			'osfamily' => 'Debian',

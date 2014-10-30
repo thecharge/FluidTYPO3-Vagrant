@@ -4,7 +4,7 @@ class php5 {
 	}
 
 	service { 'php5-fpm':
-		ensure => running,
+		ensure  => running,
 		require => Package['php5-fpm'],
 	}
 
@@ -19,61 +19,68 @@ class php5 {
 			absent => ["rm '${entry}'"],
 		}
 		augeas { "php_ini-${name}":
-			incl => $target,
-			lens => 'Php.lns',
+			incl    => $target,
+			lens    => 'Php.lns',
 			changes => $changes,
-			notify => Service['php5-fpm'],
+			notify  => Service['php5-fpm'],
 			require => [Package['augeas-tools'], Package['php5-fpm']],
 		}
 	}
 
 	php::augeas {
 		'php-memorylimit':
-		entry => 'PHP/memory_limit',
-		value => '256M';
+			entry => 'PHP/memory_limit',
+			value => '256M';
 		'php-upload_max_filesize':
-		entry => 'PHP/upload_max_filesize',
-		value => '256M';
+			entry => 'PHP/upload_max_filesize',
+			value => '256M';
 		'php-post_max_size':
-		entry => 'PHP/post_max_size',
-		value => '256M';
+			entry => 'PHP/post_max_size',
+			value => '256M';
 		'php-expose_php':
-		entry => 'PHP/expose_php',
-		value => 'off';
+			entry => 'PHP/expose_php',
+			value => 'off';
 		'php-display_errors':
-		entry => 'PHP/display_errors',
-		value => 'On';
+			entry => 'PHP/display_errors',
+			value => 'On';
 		'php-max_execution_time':
-		entry => 'PHP/max_execution_time',
-		value => '240';
+			entry => 'PHP/max_execution_time',
+			value => '240';
 		'php-open_basedir':
-		entry => 'PHP/open_basedir',
-		value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp";
+			entry => 'PHP/open_basedir',
+			value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp";
 		'php-upload_tmp_dir':
-		entry => 'PHP/upload_tmp_dir',
-		value => '/tmp';
+			entry => 'PHP/upload_tmp_dir',
+			value => '/tmp';
 		'php-session_save_path':
-		entry => 'Session/session.save_path',
-		value => '/tmp';
+			entry => 'Session/session.save_path',
+			value => '/tmp';
 		'php-date_timezone':
-		entry => 'Date/date.timezone',
-		value => 'Europe/Berlin';
+			entry => 'Date/date.timezone',
+			value => 'Europe/Berlin';
 		'xdebug-xdebug_max_nesting_level':
-		entry => 'xdebug/xdebug.max_nesting_level',
-		value => '1000',
-		target => '/etc/php5/mods-available/xdebug.ini';
+			entry  => 'xdebug/xdebug.max_nesting_level',
+			value  => '1000',
+			target => '/etc/php5/mods-available/xdebug.ini';
 		'php-cgi_fix_pathinfo':
-		entry => 'PHP/cgi.fix_pathinfo',
-		value => '0';
-		'xdebug-xdebug_profiler_enable_trigger':
-		entry => 'xdebug/xdebug.profiler_enable_trigger',
-		value => '1',
-		target => '/etc/php5/mods-available/xdebug.ini';
+			entry => 'PHP/cgi.fix_pathinfo',
+			value => '0';
+		'xdebug-xdebug_remote_enable':
+			entry  => 'xdebug/xdebug.remote_enable',
+			value  => 'on',
+			target => '/etc/php5/mods-available/xdebug.ini';
+		'xdebug-xdebug_remote_connect_back':
+			entry  => 'xdebug/xdebug.remote_connect_back',
+			value  => 'on',
+			target => '/etc/php5/mods-available/xdebug.ini';
+		'xdebug-xdebug_idekey':
+			entry  => 'xdebug/xdebug.idekey',
+			value  => 'vagrant',
+			target => '/etc/php5/mods-available/xdebug.ini';
 	}
-
 	exec { 'installPhpcs':
 		command => '/usr/bin/pear install PHP_CodeSniffer',
-		onlyif => '/usr/bin/test `/bin/which phpcs | wc -l` -eq 0',
+		onlyif  => '/usr/bin/test `/bin/which phpcs | wc -l` -eq 0',
 		require => Package['php-pear'],
 	}
 

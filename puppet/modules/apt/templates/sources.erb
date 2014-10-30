@@ -15,7 +15,7 @@ deb-src http://packages.dotdeb.org/ <%= @osversion %> all
 deb http://ftp.hosteurope.de/mirror/mariadb.org/repo/10.1/debian <%= @osversion %> main
 deb-src http://ftp.hosteurope.de/mirror/mariadb.org/repo/10.1/debian <%= @osversion %> main
 
-<% if @osversion == "wheezy" %>
-deb http://packages.dotdeb.org wheezy-php55 all
-deb-src http://packages.dotdeb.org wheezy-php55 all
+<% if @osversion == 'wheezy' %>
+	deb http://packages.dotdeb.org wheezy-php55 all
+	deb-src http://packages.dotdeb.org wheezy-php55 all
 <% end %>

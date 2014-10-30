@@ -4,10 +4,10 @@ class shell {
 		ensure => present
 	}
 
-	define	setzsh {
+	define    setzsh {
 		user { $title:
 			ensure => present,
-			shell => '/bin/zsh',
+			shell  => '/bin/zsh',
 		}
 	}
 
@@ -16,15 +16,15 @@ class shell {
 	}
 
 	exec { 'loadzshrc':
-		cwd => '/etc/zsh',
+		cwd     => '/etc/zsh',
 		command => '/usr/bin/wget -O /etc/zsh/zshrc http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc',
 		require => Package['zsh'],
-		onlyif => '/usr/bin/test `/bin/grep -c "grml" /etc/zsh/zshrc` -eq 0'
+		onlyif  => '/usr/bin/test `/bin/grep -c "grml" /etc/zsh/zshrc` -eq 0'
 	}
 
 	file { '/home/vagrant/.zshrc':
-		ensure => present,
-		source => '/etc/zsh/zshrc',
+		ensure  => present,
+		source  => '/etc/zsh/zshrc',
 		require => Package['zsh'],
 	}
 

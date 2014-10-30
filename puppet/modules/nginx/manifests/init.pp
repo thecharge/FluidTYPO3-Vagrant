@@ -15,7 +15,7 @@ class nginx {
 
 	file { '/etc/php5/fpm/pool.d/vagrant.conf':
 		content => template('nginx/php5-fpm.erb'),
-		notify => Service['php5-fpm'],
+		notify  => Service['php5-fpm'],
 	}
 
 	package { [ 'nginx', 'nginx-full', 'nginx-common']:
@@ -29,28 +29,28 @@ class nginx {
 	file { '/etc/nginx/includes/typo3.conf':
 		content => template('nginx/typo3.erb'),
 		require => [File['/etc/nginx/includes'], Package['nginx']],
-		notify => Service['nginx'],
+		notify  => Service['nginx'],
 	}
 
 	file { '/etc/nginx/includes/tools.conf':
 		content => template('nginx/tools.erb'),
 		require => [File['/etc/nginx/includes'], Package['nginx']],
-		notify => Service['nginx'],
+		notify  => Service['nginx'],
 	}
 
 	file { '/etc/nginx/sites-available/default':
 		content => template('nginx/nginx.erb'),
 		require => Package['nginx'],
-		notify => Service['nginx'],
+		notify  => Service['nginx'],
 	}
 
 	service { 'nginx':
-		ensure => running,
+		ensure  => running,
 		require => Package['nginx'],
 	}
 
 	file { "${document_root}/index.html":
-		ensure => absent,
+		ensure  => absent,
 		require => Package['nginx'],
 	}
 

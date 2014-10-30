@@ -6,7 +6,7 @@ location /phpMyAdmin {
 	}
 
 	location ~ ^/phpMyAdmin(.+\.php)$ {
-		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		include fastcgi_params;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;
@@ -23,7 +23,7 @@ location /webmail {
 	}
 
 	location ~ ^/webmail/(.+\.php)$ {
-		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		include fastcgi_params;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_param SCRIPT_FILENAME /usr/share/php/roundcubemail/$1;
@@ -40,7 +40,7 @@ location /webgrind {
 	}
 
 	location ~ ^/webgrind(.+\.php)$ {
-		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		include fastcgi_params;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;
@@ -57,7 +57,7 @@ location /OpCacheGUI {
 	}
 
 	location ~ ^/OpCacheGUI/(.+\.php)$ {
-		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		include fastcgi_params;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_param SCRIPT_FILENAME /usr/share/php/OpCacheGUI/public/$1;
@@ -71,7 +71,7 @@ location /OpCacheGUI {
 }
 
 location ~ ^/opcache-dashboard.php$ {
-	fastcgi_pass 127.0.0.1:9000;
+	fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 	include fastcgi_params;
 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
 	fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;
@@ -80,7 +80,7 @@ location ~ ^/opcache-dashboard.php$ {
 }
 
 location ~ ^/opcache.php$ {
-	fastcgi_pass 127.0.0.1:9000;
+	fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 	include fastcgi_params;
 	fastcgi_split_path_info ^(.+\.php)(/.+)$;
 	fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;

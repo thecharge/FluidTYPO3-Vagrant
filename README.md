@@ -10,6 +10,7 @@ Also this project is in a early state and you need to fill a issue report.
 ## Quick-start
 Checkout the repo, edit Vagrantfile facters.
 ```vagrant up```
+Domain is http://dev.fluidtypo3.org
 Have fun :)
 
 ### Features
@@ -19,14 +20,13 @@ Have fun :)
 - zsh with grml
 - PHP-FPM
 - github sources (TYPO3, Webgrind,Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
-- vagrant rsync (activate via ```vagrant rsync-auto```)
-- webgrind - xDebug profiler http://host/webgrind (Add ?XDEBUG_PROFILE for a profile)
-- phpMyAdmin - http://host/phpMyAdmin
+- webgrind - xDebug profiler http://dev.fluidtypo3.org/webgrind (Add ?XDEBUG_PROFILE for a profile)
+- phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
 + Opcache Stats (3 different tools)
-    * Opcache http://host/opcache.php
-    * Opcache http://host/opcache-dashboard.php
-    * OpCacheGUI http://host/OpCacheGUI
-+ roundcubemail http://host/webmail - All mails are send to development@localhost
+    * Opcache http://dev.fluidtypo3.org/opcache.php
+    * Opcache http://dev.fluidtypo3.org/opcache-dashboard.php
+    * OpCacheGUI http://dev.fluidtypo3.org/OpCacheGUI
++ roundcubemail http://dev.fluidtypo3.org/webmail - All mails are send to development@localhost
     * Login via development Password password
 - Cronjob for scheduler
 - Codesniffer with FluidTYPO3 standard
@@ -37,7 +37,7 @@ phpcs -n --standard=FluidTYPO3 --extensions=php /var/www/typo3conf/ext/builder
 ```
 
 ### Requirements
-- Linux, Mac are tested. We got positive feedback from Windows user - Please take a look at FAQ section
+- Linux, Mac are tested
 - For installation Internet connection with enough broadband
 - We only test with the provider Virtualbox
 
@@ -58,6 +58,10 @@ Mail
 - User: development
 - Password: password
 
+Vagrant shell
+- User: vagrant
+- Password: vagrant
+
 ### Contributing
 Create a PR.
 
@@ -65,7 +69,7 @@ Create a PR.
 ### FAQ
 
 #### Do we support Windows as host?
-- We got positive feedback from Windows users. Please take a look in [offical documention|http://docs.vagrantup.com/v2/synced-folders/rsync.html] for rsync support under Windows or comment it out.
+- Windows needs to replace the NFS share with SMB or Virtualbox shared folder. Please take a look in [https://docs.vagrantup.com/v2/synced-folders/index.html] and change your Vagrantfile.
 
 #### Initial download volume?
 - First time 420 MB for cache vagrant box and 150 MB each complete vagrant up

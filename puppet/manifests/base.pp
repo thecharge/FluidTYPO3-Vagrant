@@ -4,7 +4,7 @@ class { '::mysql::server':
 
 include apt
 include defaultpackage
-include hostname
+include network
 include shell
 include ssl
 include php5

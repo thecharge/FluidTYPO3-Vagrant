@@ -1,6 +1,8 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = '2'
 DOCUMENT_ROOT = '/var/www'
+
+Vagrant.require_version ">= 1.6.2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.box = 'puphpet/debian75-x64'
 
@@ -40,6 +42,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		puppet.module_path    = 'puppet/modules'
 		puppet.options = '--hiera_config /vagrant/hiera.yaml'
 		puppet.facter = {
+			#Example 'apt_proxy' => 'http://10.10.10.10:3142',
+			'apt_proxy' => '',
 			'fluidtypo3_branch' => 'development',
 			'document_root' => DOCUMENT_ROOT,
 			'fqdn' => 'dev.fluidtypo3.org',

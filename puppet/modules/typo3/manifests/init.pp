@@ -70,7 +70,7 @@ class typo3 {
 		require => [Package['curl'], Service['nginx'], Service['php5-fpm']]
 	}
 
-	exec { 'removeTYPO3Extensionscs':
+	exec { 'removeTYPO3ExtensionCsc':
 		cwd     => $document_root,
 		command => "${document_root}/typo3/cli_dispatch.phpsh extbase extension:uninstall css_styled_content",
 		require => Exec['setupTYPO3'],
@@ -108,4 +108,19 @@ class typo3 {
 		source  => "${document_root}/typo3conf/ext/fluidcontent_core/Build/AdditionalConfiguration.php",
 		require => Load_extension['fluidcontent_core'],
 	}
+
+	exec { 'addSite':
+		command => "/usr/bin/mysql --user='typo3' --password='password' --database='typo3' --execute=\"INSERT INTO pages (uid, pid, t3ver_oid, t3ver_id, t3ver_wsid, t3ver_label, t3ver_state, t3ver_stage, t3ver_count, t3ver_tstamp, t3ver_move_id, t3_origuid, tstamp, sorting, deleted, perms_userid, perms_groupid, perms_user, perms_group, perms_everybody, editlock, crdate, cruser_id, hidden, title, doktype, TSconfig, storage_pid, is_siteroot, php_tree_stop, tx_impexp_origuid, url, starttime, endtime, urltype, shortcut, shortcut_mode, no_cache, fe_group, subtitle, layout, url_scheme, target, media, lastUpdated, keywords, cache_timeout, cache_tags, newUntil, description, no_search, SYS_LASTCHANGED, abstract, module, extendToSubpages, author, author_email, nav_title, nav_hide, content_from_pid, mount_pid, mount_pid_ol, alias, l18n_cfg, fe_login_mode, backend_layout, backend_layout_next_level, categories, tx_fluidpages_templatefile, tx_fluidpages_layout, tx_fed_page_flexform, tx_fed_page_flexform_sub, tx_fed_page_controller_action, tx_fed_page_controller_action_sub) VALUES
+ (1, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, UNIX_TIMESTAMP(), 128, 0, 1, 0, 31, 27, 0, 0, UNIX_TIMESTAMP(), 1, 0, 'Homepage', 1, '', 0, 1, 0, 0, '', 0, 0, 1, 0, 0, 0, '', '', 0, 0, '', '0', 0, '', 0, '', 0, '', 0, 0, '', '', 0, '', '', '', 0, 0, 0, 0, '', 0, 0, 'fluidpages__fluidpages', 'fluidpages__fluidpages', 0, NULL, NULL, NULL, NULL, '', '');\"" ,
+		require => Load_extension['fluidpages'],
+		onlyif  => '/usr/bin/test `/usr/bin/mysql -s -N --user="typo3" --password="password" --database="typo3" --execute="SELECT count(*) FROM pages WHERE uid=1"` -eq 0',
+	}
+
+	exec { 'addSiteTemplate':
+		command => "/usr/bin/mysql --user='typo3' --password='password' --database='typo3' --execute=\"INSERT INTO sys_template (uid, pid, t3ver_oid, t3ver_id, t3ver_wsid, t3ver_label, t3ver_state, t3ver_stage, t3ver_count, t3ver_tstamp, t3_origuid, tstamp, sorting, crdate, cruser_id, title, sitetitle, hidden, starttime, endtime, root, clear, include_static_file, constants, config, nextLevel, description, basedOn, deleted, includeStaticAfterBasedOn, static_file_mode, tx_impexp_origuid) VALUES
+ (1, 1, 0, 0, 0, '', 0, 0, 0, 0, 0, 1414543149, 256, 1414543099, 1, 'Maintemplate', '', 0, 0, 0, 1, 3, 'EXT:fluidcontent_core/Configuration/TypoScript', NULL, '', '', NULL, '', 0, 0, 0, 0);\"" ,
+		require => Load_extension['fluidpages'],
+		onlyif  => '/usr/bin/test `/usr/bin/mysql -s -N --user="typo3" --password="password" --database="typo3" --execute="SELECT count(*) FROM sys_template WHERE uid=1"` -eq 0',
+	}
+
 }

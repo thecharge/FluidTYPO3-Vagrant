@@ -1,5 +1,5 @@
 class php5 {
-	package { ['php5-cli', 'php5-fpm', 'php5-mysqlnd', 'php5-gd', 'php5-intl', 'php5-mcrypt', 'php-pear', 'phpunit', 'phpunit-selenium', 'php5-imap', 'php-auth', 'mcrypt', 'imagemagick', 'php5-curl', 'php5-tidy', 'php5-xdebug', 'php5-xmlrpc', 'php5-xsl', 'php-soap', 'php-mail', 'php5-dev', 'php5-common']:
+	package { ['php5-cli', 'php5-fpm', 'php5-mysqlnd', 'php5-gd', 'php5-intl', 'php5-mcrypt', 'php-pear', 'phpunit', 'php5-imap', 'php-auth', 'mcrypt', 'imagemagick', 'php5-curl', 'php5-tidy', 'php5-xdebug', 'php5-xmlrpc', 'php5-xsl', 'php-soap', 'php-mail', 'php5-dev', 'php5-common']:
 		ensure => present,
 	}
 
@@ -58,13 +58,13 @@ class php5 {
 		'php-date_timezone':
 			entry => 'Date/date.timezone',
 			value => 'Europe/Berlin';
+		'php-cgi_fix_pathinfo':
+			entry => 'PHP/cgi.fix_pathinfo',
+			value => '0';
 		'xdebug-xdebug_max_nesting_level':
 			entry  => 'xdebug/xdebug.max_nesting_level',
 			value  => '1000',
 			target => '/etc/php5/mods-available/xdebug.ini';
-		'php-cgi_fix_pathinfo':
-			entry => 'PHP/cgi.fix_pathinfo',
-			value => '0';
 		'xdebug-xdebug_remote_enable':
 			entry  => 'xdebug/xdebug.remote_enable',
 			value  => 'on',
@@ -77,7 +77,12 @@ class php5 {
 			entry  => 'xdebug/xdebug.idekey',
 			value  => 'vagrant',
 			target => '/etc/php5/mods-available/xdebug.ini';
+		'xdebug-xdebug_profiler_enable_trigger':
+			entry => 'xdebug/xdebug.profiler_enable_trigger',
+			value => '1',
+			target => '/etc/php5/mods-available/xdebug.ini';
 	}
+
 	exec { 'installPhpcs':
 		command => '/usr/bin/pear install PHP_CodeSniffer',
 		onlyif  => '/usr/bin/test `/bin/which phpcs | wc -l` -eq 0',

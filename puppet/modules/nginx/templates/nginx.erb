@@ -13,6 +13,7 @@ server {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		fastcgi_index index.php;
+		fastcgi_read_timeout 600;
 	}
 	include includes/typo3.conf;
 }
@@ -51,6 +52,7 @@ server {
 		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		fastcgi_index index.php;
 		include fastcgi_params;
+		fastcgi_read_timeout 600;
 	}
 	include includes/typo3.conf;
 }

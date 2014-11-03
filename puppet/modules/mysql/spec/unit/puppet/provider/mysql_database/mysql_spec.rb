@@ -58,7 +58,7 @@ test
     it 'makes a database' do
       provider.expects(:mysql).with([defaults_file, '-NBe', "create database if not exists `#{resource[:name]}` character set #{resource[:charset]} collate #{resource[:collate]}"])
       provider.expects(:exists?).returns(true)
-      provider.create.should be_truthy
+      provider.create.should be_true
     end
   end
 
@@ -66,13 +66,13 @@ test
     it 'removes a database if present' do
       provider.expects(:mysql).with([defaults_file, '-NBe', "drop database `#{resource[:name]}`"])
       provider.expects(:exists?).returns(false)
-      provider.destroy.should be_truthy
+      provider.destroy.should be_true
     end
   end
 
   describe 'exists?' do
     it 'checks if database exists' do
-      instance.exists?.should be_truthy
+      instance.exists?.should be_true
     end
   end
 

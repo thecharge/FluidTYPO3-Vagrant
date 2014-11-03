@@ -14,21 +14,17 @@ when 'RedHat'
   if fact('operatingsystemmajrelease') == '7'
     ruby_package_provider = 'gem'
   end
-  client_dev_package = 'undef'
-  daemon_dev_package = 'mysql-devel'
 when 'Suse'
-  java_package       = 'mysql-connector-java'
-  perl_package       = 'perl-DBD-mysql'
-  php_package        = 'apache2-mod_php53'
-  python_package     = 'python-mysql'
+  java_package   = 'mysql-connector-java'
+  perl_package   = 'perl-DBD-mysql'
+  php_package    = 'apache2-mod_php53'
+  python_package = 'python-mysql'
   case operatingsystem
   when /OpenSuSE/
     ruby_package = 'rubygem-mysql'
   when /(SLES|SLED)/
     ruby_package = 'ruby-mysql'
   end
-  client_dev_package = 'libmysqlclient-devel'
-  daemon_dev_package = 'mysql-devel'
 when 'Debian'
   java_package = 'libmysql-java'
   perl_package     = 'libdbd-mysql-perl'
@@ -39,16 +35,12 @@ when 'Debian'
   else
     ruby_package   = 'libmysql-ruby'
   end
-  client_dev_package = 'libmysqlclient-dev'
-  daemon_dev_package = 'libmysqld-dev'
 when 'FreeBSD'
   java_package = 'databases/mysql-connector-java'
   perl_package   = 'p5-DBD-mysql'
   php_package    = 'php5-mysql'
   python_package = 'databases/py-MySQLdb'
   ruby_package   = 'ruby-mysql'
-  client_dev_package = 'undef'
-  daemon_dev_package = 'undef'
 else
   case operatingsystem
   when 'Amazon'
@@ -57,8 +49,6 @@ else
     php_package    = 'php5-mysql'
     python_package = 'MySQL-python'
     ruby_package   = 'ruby-mysql'
-    client_dev_package = 'undef'
-    daemon_dev_package = 'undef'
   end
 end
 
@@ -87,34 +77,26 @@ describe 'mysql::bindings class', :unless => UNSUPPORTED_PLATFORMS.include?(fact
     it 'should work with no errors' do
       pp = <<-EOS
         class { 'mysql::bindings':
-          java_enable                 => true,
-          perl_enable                 => true,
-          php_enable                  => true,
-          python_enable               => true,
-          ruby_enable                 => true,
-          client_dev                  => true,
-          daemon_dev                  => true,
-          java_package_ensure         => present,
-          perl_package_ensure         => present,
-          php_package_ensure          => present,
-          python_package_ensure       => present,
-          ruby_package_ensure         => present,
-          client_dev_package_ensure   => present,
-          daemon_dev_package_ensure   => present,
-          java_package_name           => #{java_package},
-          perl_package_name           => #{perl_package},
-          php_package_name            => #{php_package},
-          python_package_name         => #{python_package},
-          ruby_package_name           => #{ruby_package},
-          client_dev_package_name     => #{client_dev_package},
-          daemon_dev_package_name     => #{daemon_dev_package},
-          java_package_provider       => undef,
-          perl_package_provider       => undef,
-          php_package_provider        => undef,
-          python_package_provider     => undef,
-          ruby_package_provider       => #{ruby_package_provider},
-          client_dev_package_provider => undef,
-          daemon_dev_package_provider => undef,
+          java_enable             => true,
+          perl_enable             => true,
+          php_enable              => true,
+          python_enable           => true,
+          ruby_enable             => true,
+          java_package_ensure     => present,
+          perl_package_ensure     => present,
+          php_package_ensure      => present,
+          python_package_ensure   => present,
+          ruby_package_ensure     => present,
+          java_package_name       => #{java_package},
+          perl_package_name       => #{perl_package},
+          php_package_name        => #{php_package},
+          python_package_name     => #{python_package},
+          ruby_package_name       => #{ruby_package},
+          java_package_provider   => undef,
+          perl_package_provider   => undef,
+          php_package_provider    => undef,
+          python_package_provider => undef,
+          ruby_package_provider   => #{ruby_package_provider},
         }
       EOS
 

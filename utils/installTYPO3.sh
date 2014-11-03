@@ -42,4 +42,4 @@ mysql --user="$DATABASE_USER" --password="$DATABASE_PASSWORD" --database="$DATAB
 
 setHash
 
-curl "${HOST}typo3/sysext/install/Start/Install.php?install\[redirectCount\]=4&install\[context\]=standalone&install\[controller\]=step&install\[action\]=defaultConfiguration" -H 'Content-Type: application/x-www-form-urlencoded' --data "install%5Bcontroller%5D=step&install%5Baction%5D=defaultConfiguration&install%5Btoken%5D=${HASH}&install%5Bcontext%5D=standalone&install%5Bset%5D=execute&install%5Bvalues%5D%5Bloaddistributions%5D=1"
+curl "${HOST}typo3/sysext/install/Start/Install.php?install\[redirectCount\]=4&install\[context\]=standalone&install\[controller\]=step&install\[action\]=defaultConfiguration" -H 'Content-Type: application/x-www-form-urlencoded' --data "install%5Bcontroller%5D=step&install%5Baction%5D=defaultConfiguration&install%5Btoken%5D=${HASH}&install%5Bcontext%5D=standalone&install%5Bset%5D=execute&install%5Bvalues%5D%5Bloaddistributions%5D=0"

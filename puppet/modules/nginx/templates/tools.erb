@@ -78,12 +78,3 @@ location ~ ^/opcache-dashboard.php$ {
 	fastcgi_index index.php;
 	fastcgi_intercept_errors on;
 }
-
-location ~ ^/opcache.php$ {
-	fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
-	include fastcgi_params;
-	fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;
-	fastcgi_index index.php;
-	fastcgi_intercept_errors on;
-}

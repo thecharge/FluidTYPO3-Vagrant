@@ -9,12 +9,6 @@ class tools {
 		require  => Package['php5-common'],
 	}
 
-	exec { 'opcache':
-		cwd     => '/usr/share/php',
-		command => '/usr/bin/wget https://raw.githubusercontent.com/rlerdorf/opcache-status/master/opcache.php -O opcache.php',
-		require => Package['php5-common'],
-	}
-
 	exec { 'opcache-dashboard':
 		cwd     => '/usr/share/php',
 		command => '/usr/bin/wget https://raw.githubusercontent.com/carlosbuenosvinos/opcache-dashboard/master/opcache.php -O opcache-dashboard.php',

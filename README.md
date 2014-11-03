@@ -19,11 +19,10 @@ Have fun :)
 - Postfix + Dovecot
 - zsh with grml
 - PHP-FPM
-- github sources (TYPO3, Webgrind,Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
+- github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
 - webgrind - xDebug profiler http://dev.fluidtypo3.org/webgrind (Add ?XDEBUG_PROFILE for a profile)
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
 + Opcache Stats (3 different tools)
-    * Opcache http://dev.fluidtypo3.org/opcache.php
     * Opcache http://dev.fluidtypo3.org/opcache-dashboard.php
     * OpCacheGUI http://dev.fluidtypo3.org/OpCacheGUI
 + roundcubemail http://dev.fluidtypo3.org/webmail - All mails are send to development@localhost
@@ -78,9 +77,6 @@ Create a PR.
 - Depends on a lot of factors. HDD speed, connection speed<br />
 ```vagrant up``` ~7min 30sec (install/start VM + first provision 360 sec)<br />
 ```vagrant provision``` ~60 seconds
-
-#### Any way to improve with a slow connection?
-- Easiest way is cache or mirror the debian repository. This is also possible for git repository's.
 
 
 ### Warning

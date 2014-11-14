@@ -1,5 +1,5 @@
 class defaultpackage {
-	package { ['htop', 'iftop', 'pwgen', 'mytop', 'wget', 'curl', 'multitail', 'iotop', 'augeas-tools', 'libaugeas-ruby', 'linux-headers-amd64', 'rsync']:
+	package { ['htop', 'iftop', 'graphviz', 'pwgen', 'mytop', 'wget', 'curl', 'multitail', 'iotop', 'augeas-tools', 'libaugeas-ruby', 'linux-headers-amd64', 'rsync']:
 		ensure => present,
 	}
 

@@ -33,6 +33,12 @@ class tools {
 		require  => Package['php5-common'],
 	}
 
+	file { '/usr/local/bin/dot':
+		ensure => 'link',
+		target => '/usr/bin/dot',
+		require => Package['graphviz'],
+	}
+
 	vcsrepo { '/usr/share/php/roundcubemail':
 		ensure   => latest,
 		revision => 'master',

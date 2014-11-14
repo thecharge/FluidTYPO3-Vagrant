@@ -20,7 +20,7 @@ Also this project is in a early state and you need to fill a issue report.
 - zsh with grml
 - PHP-FPM
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
-- webgrind - xDebug profiler http://dev.fluidtypo3.org/webgrind (Add ?XDEBUG_PROFILE for a profile)
+- webgrind - xDebug profiler http://dev.fluidtypo3.org/webgrind
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
 + Opcache Stats (3 different tools)
     * Opcache http://dev.fluidtypo3.org/opcache-dashboard.php
@@ -61,9 +61,11 @@ Vagrant shell
 - User: vagrant
 - Password: vagrant
 
-### Contributing
-Create a PR.
+### xDebug
+Use a Firefox or Chrome extension to active debug or profiler
 
+#### Webgrind profiler
+Instead of a browser-extension ?XDEBUG_PROFILE as GET parameter is also possible
 
 ### FAQ
 

@@ -8,15 +8,15 @@ This setup is only for local test setup. TrustedHostPattern is a wildcard.
 Also this project is in a early state and you need to fill a issue report.
 
 ## Quick-start
-Checkout the repo, edit Vagrantfile facters.
-```vagrant up```
-Domain is http://dev.fluidtypo3.org
-Have fun :)
+1. Checkout the repo, edit Vagrantfile facters.
+2. ```vagrant up```
+3. Domain is http://dev.fluidtypo3.org
+4. Have fun :)
 
 ### Features
 - Nginx 1.6.x
 - MariaDB 10.1
-- Postfix + Dovecot
+- Postfix + Dovecot (IMAP for mail-tests)
 - zsh with grml
 - PHP-FPM
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
@@ -78,6 +78,8 @@ Create a PR.
 ```vagrant up``` ~7min 30sec (install/start VM + first provision 360 sec)<br />
 ```vagrant provision``` ~60 seconds
 
+#### Encrypted disk
+- NFS does not support encrypted host storage as mount.
 
 ### Warning
 - Puppet Vscrepo is patched to allow depth with a branch option

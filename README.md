@@ -20,7 +20,7 @@ Also this project is in a early state and you need to fill a issue report.
 - zsh with grml
 - PHP-FPM
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
-- webgrind - xDebug profiler http://dev.fluidtypo3.org/webgrind
+- webgrind - Xdebug profiler gui http://dev.fluidtypo3.org/webgrind
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
 + Opcache Stats (3 different tools)
     * Opcache http://dev.fluidtypo3.org/opcache-dashboard.php
@@ -61,11 +61,17 @@ Vagrant shell
 - User: vagrant
 - Password: vagrant
 
-### xDebug
+### Xdebug
 Use a Firefox or Chrome extension to active debug or profiler
 
+- [Firefox Addon - The easiest Xdebug](https://addons.mozilla.org/de/firefox/addon/the-easiest-xdebug)
+- [Chrome Addon - Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
+
+#### phpStorm/IDEA remote listener
+Activate in PhpStorm/IDEA ´´´Start Listening for PHP Debug Connections´´´ and turn the debug option in browser addon on. Define a breakpoint and reload the page.
+
 #### Webgrind profiler
-Instead of a browser-extension ?XDEBUG_PROFILE as GET parameter is also possible
+Activate the profiler function of the addon. Instead of a browser-extension ?XDEBUG_PROFILE as GET parameter is also possible.
 
 ### FAQ
 

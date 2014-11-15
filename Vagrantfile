@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	# Share an additional folder to the guest VM.
 	# Sync local folders in VM and ignore git folders.
 
-	config.vm.synced_folder 'data', DOCUMENT_ROOT, id: 'fluidTYPO3', type: 'nfs',
+	config.vm.synced_folder 'www', DOCUMENT_ROOT, id: 'fluidTYPO3', type: 'nfs',
 			mount_options: ['rw', 'vers=3', 'tcp']
 			# Comment in and run vagrant reload and NFS has a cache server.
 			#mount_options: ['rw', 'vers=3', 'tcp', 'fsc']

@@ -1,0 +1,25 @@
+---
+VirtualMachine:
+  ip: "172.23.23.23"
+  cpus: 2
+  memory: 2048
+  # Start a with a windows from the Virtualbox
+  gui: false
+  # Fully qualified domain name (dev.fluidtypo3.org has a DNS Record on private ip 172.23.23.23)
+  domain: dev.fluidtypo3.org
+  #Apt proxy setting for a local mirror or  e.g. http://172.23.23.1:3142
+  aptProxy:
+  # To get a IP in local network and share it you need a bridge
+  networkBridge: false
+
+TYPO3:
+  branch: TYPO3_6-2
+
+FluidTYPO3:
+  branch: development
+
+Mount:
+  # Local folder
+  from: www
+  # Remote folder
+  to: /var/www

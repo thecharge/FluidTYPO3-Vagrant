@@ -9,9 +9,10 @@ Also this project is in a early state and you need to fill a issue report.
 
 ## Quick-start
 1. Checkout the repo, edit Vagrantfile facters.
-2. ```vagrant up```
-3. Domain is http://dev.fluidtypo3.org
-4. Have fun :)
+2. Take a look in Configuration.yaml
+3. ```vagrant up```
+4. Domain is http://dev.fluidtypo3.org
+5. Have fun :)
 
 ### Features
 - Nginx 1.6.x

@@ -11,6 +11,10 @@ VirtualMachine:
   aptProxy:
   # To get a IP in local network and share it you need a bridge
   networkBridge: false
+  # Puppet debug and verbose for more information
+  puppetDebug: false
+  # NFS CacheFiles NFS cache for more performance - works only after first provision
+  fsc: false
 
 TYPO3:
   branch: TYPO3_6-2

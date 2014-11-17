@@ -72,6 +72,12 @@ class typo3 {
 		remounts => false,
 	}
 
+	cron { mount:
+		command => "mount -a",
+		user    => root,
+		minute  => '*',
+	}
+
 	vcsrepo { '/usr/share/php/PHP/CodeSniffer/Standards/FluidTYPO3':
 		ensure   => latest,
 		revision => master,

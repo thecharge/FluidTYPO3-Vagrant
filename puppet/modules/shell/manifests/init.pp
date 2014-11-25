@@ -28,4 +28,10 @@ class shell {
 		require => Package['zsh'],
 	}
 
+	file { '/home/vagrant/.zlogin':
+		ensure  => present,
+		content => 'cd /var/www',
+		require => Package['zsh'],
+	}
+
 }

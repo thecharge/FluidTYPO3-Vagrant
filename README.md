@@ -15,11 +15,10 @@ Also this project is in a early state and you need to fill a issue report.
 5. Have fun :)
 
 ### Features
-- Nginx 1.6.x
+- Nginx 1.6.x with php-fpm
 - MariaDB 10.1
 - Postfix + Dovecot (IMAP for mail-tests)
 - zsh with grml
-- PHP-FPM
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
 - webgrind - Xdebug profiler gui http://dev.fluidtypo3.org/webgrind
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
@@ -30,6 +29,8 @@ Also this project is in a early state and you need to fill a issue report.
     * Login via development Password password
 - Cronjob for scheduler
 - Codesniffer with FluidTYPO3 standard
+- PHPunit for testing
+- Composer
 
 ### Codesniffer example
 ```shell
@@ -77,7 +78,7 @@ Activate the profiler function of the addon. Instead of a browser-extension ?XDE
 ### FAQ
 
 #### Do we support Windows as host?
-- Windows needs to replace the NFS share with SMB or Virtualbox shared folder. Please take a look in [https://docs.vagrantup.com/v2/synced-folders/index.html] and change your Vagrantfile.
+- We only support the slow Virtualbox shared folder or NFS under Windows with winnfsd plugin. For SMB take a look in [Manual](https://docs.vagrantup.com/v2/synced-folders/index.html). We can"t test under windows and feedback is welcome.
 
 #### Initial download volume?
 - First time 420 MB for cache vagrant box and 150 MB each complete vagrant up

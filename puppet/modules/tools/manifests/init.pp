@@ -12,6 +12,7 @@ class tools {
 	exec { 'opcache-dashboard':
 		cwd     => '/usr/share/php',
 		command => '/usr/bin/wget https://raw.githubusercontent.com/carlosbuenosvinos/opcache-dashboard/master/opcache.php -O opcache-dashboard.php',
+		unless  => '/usr/bin/test -f /usr/share/php/opcache-dashboard.php',
 		require => Package['php5-common'],
 	}
 

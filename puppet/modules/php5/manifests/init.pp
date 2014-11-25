@@ -1,5 +1,5 @@
 class php5 {
-	package { ['php5-cli', 'php5-fpm', 'php5-mysqlnd', 'php5-gd', 'php5-intl', 'php5-mcrypt', 'php-pear', 'phpunit', 'php5-imap', 'php-auth', 'mcrypt', 'imagemagick', 'php5-curl', 'php5-tidy', 'php5-xdebug', 'php5-xmlrpc', 'php5-xsl', 'php-soap', 'php-mail', 'php5-dev', 'php5-common']:
+	package { ['php5-cli', 'php5-fpm', 'php5-mysqlnd', 'php5-gd', 'php5-intl', 'php5-mcrypt', 'php-pear', 'php5-imap', 'php-auth', 'mcrypt', 'imagemagick', 'php5-curl', 'php5-tidy', 'php5-xmlrpc', 'php5-xsl', 'php-soap', 'php-mail', 'php5-dev', 'php5-common']:
 		ensure => present,
 	}
 
@@ -85,8 +85,26 @@ class php5 {
 
 	exec { 'installPhpcs':
 		command => '/usr/bin/pear install PHP_CodeSniffer',
-		onlyif  => '/usr/bin/test `/bin/which phpcs | wc -l` -eq 0',
+		unless  => '/usr/bin/test -f /usr/bin/phpcs',
 		require => Package['php-pear'],
+	}
+
+	exec { 'installPhpXdebug':
+		command => '/usr/bin/pecl install xdebug',
+		unless  => '/usr/bin/test -f /usr/lib/php5/*/xdebug.so',
+		require => [Package['php-pear'], Package['php5-dev']],
+	}
+
+	exec { 'installPhpUnit':
+		cwd     => '/usr/local/bin',
+		command => '/usr/bin/wget https://phar.phpunit.de/phpunit.phar -O phpunit && /bin/chmod +x phpunit',
+		unless  => '/usr/bin/test -f /usr/local/bin/phpunit',
+	}
+
+	exec { 'installComposer':
+		cwd     => '/usr/local/bin',
+		command => '/usr/bin/wget https://getcomposer.org/composer.phar -O composer && /bin/chmod +x composer',
+		unless  => '/usr/bin/test -f /usr/local/bin/composer',
 	}
 
 }

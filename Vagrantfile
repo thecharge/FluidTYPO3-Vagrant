@@ -2,13 +2,17 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version ">= 1.6.2"
 
 require 'yaml'
-if File.file?('Configuration.yaml')
-	Configuration = YAML.load_file('Configuration.yaml')
+
+Configuration = YAML.load(File.open(File.join(File.dirname(__FILE__), 'Configuration.sample.yaml'), File::RDONLY).read)
+if File.file?File.join(File.dirname(__FILE__),'Configuration.yaml')
 else
 	require 'fileutils'
-	FileUtils.cp('Configuration.sample.yaml','Configuration.yaml')
-	Configuration = YAML.load_file('Configuration.yaml')
+	FileUtils.cp(File.join(File.dirname(__FILE__),'Configuration.sample.yaml'),File.join(File.dirname(__FILE__),'Configuration.yaml'))
 	puts('Configuration.yaml was missing. The Configuration.sample.yaml got copied')
+end
+
+begin
+	Configuration.merge!(YAML.load(File.open(File.join(File.dirname(__FILE__), 'Configuration.yaml'), File::RDONLY).read))
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|

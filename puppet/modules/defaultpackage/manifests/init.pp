@@ -5,6 +5,7 @@ class defaultpackage {
 
 	exec { 'git-backports':
 		command => '/usr/bin/apt-get -t wheezy-backports -y -q install git',
+		onlyif  => '/usr/bin/test `/usr/bin/dpkg -l git | /bin/grep -c ~bpo` -eq 0',
 	}
 
 	Exec['apt-update'] -> Exec['git-backports'] -> Vcsrepo <| |>

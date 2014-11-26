@@ -77,4 +77,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			'osversion' => 'wheezy',
 		}
 	end
+	config.vm.provision 'shell', path: 'utils/afterStart.sh',  :privileged => false, :run => 'always'
 end

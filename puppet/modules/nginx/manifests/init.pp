@@ -26,6 +26,12 @@ class nginx {
 		ensure => directory,
 	}
 
+	file { '/etc/nginx/nginx.conf':
+		content => template('nginx/nginx.conf.erb'),
+		require => Package['nginx'],
+		notify  => Service['nginx'],
+	}
+
 	file { '/etc/nginx/includes/typo3.conf':
 		content => template('nginx/typo3.erb'),
 		require => [File['/etc/nginx/includes'], Package['nginx']],
@@ -39,7 +45,7 @@ class nginx {
 	}
 
 	file { '/etc/nginx/sites-available/default':
-		content => template('nginx/nginx.erb'),
+		content => template('nginx/site-default.erb'),
 		require => Package['nginx'],
 		notify  => Service['nginx'],
 	}

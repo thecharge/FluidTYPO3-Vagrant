@@ -16,10 +16,23 @@
 		log_not_found off;
 	}
 
+	location ~* \.svgz {
+		add_header Content-Encoding "gzip";
+	}
+
 	client_max_body_size 100M;
 
-	location ~ /\.(js|css)$ {
-		expires 604800s;
+	location ~* ^.+\.(?:css|cur|js|jpe?g|gif|ico|png|html|xml)$ {
+		expires 4w;
+		add_header Pragma public;
+		add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+
+		tcp_nodelay off;
+		## Set the OS file cache.
+		open_file_cache max=3000 inactive=120s;
+		open_file_cache_valid 45s;
+		open_file_cache_min_uses 2;
+		open_file_cache_errors off;
 	}
 
 	if (!-e $request_filename){

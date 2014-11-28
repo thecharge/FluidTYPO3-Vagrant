@@ -1,34 +1,12 @@
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server ipv6only=on;
+	listen 80;
+	listen 443 ssl spdy;
 
 	root <%= @document_root %>;
 	index index.php;
 	server_name _;
 
-	include includes/tools.conf;
 
-	location ~ \.php$ {
-		include fastcgi_params;
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
-		fastcgi_index index.php;
-		fastcgi_read_timeout 600;
-	}
-	include includes/typo3.conf;
-}
-
-# HTTPS server
-#
-server {
-	listen 443 spdy;
-	listen [::]:443 default_server ipv6only=on;
-
-	root <%= @document_root %>;
-	index index.php;
-	server_name _;
-
-	ssl on;
 	ssl_certificate /etc/ssl/server.crt;
 	ssl_certificate_key /etc/ssl/server.key;
 
@@ -45,14 +23,14 @@ server {
 	add_header Strict-Transport-Security max-age=63072000;
 	add_header X-Content-Type-Options nosniff;
 
-	include includes/tools.conf;
-
 	location ~ \.php$ {
+		fastcgi_pass php-fpm;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/var/run/php-fpm-vagrant.socket;
 		fastcgi_index index.php;
 		include fastcgi_params;
 		fastcgi_read_timeout 600;
 	}
+
 	include includes/typo3.conf;
+	include includes/tools.conf;
 }

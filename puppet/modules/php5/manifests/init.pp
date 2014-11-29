@@ -61,6 +61,10 @@ class php5 {
 		'php-cgi_fix_pathinfo':
 			entry => 'PHP/cgi.fix_pathinfo',
 			value => '0';
+		'xdebug-zend_extension':
+			entry  => 'xdebug/zend_extension',
+			value  => 'xdebug.so',
+			target => '/etc/php5/mods-available/xdebug.ini';
 		'xdebug-xdebug_max_nesting_level':
 			entry  => 'xdebug/xdebug.max_nesting_level',
 			value  => '1000',
@@ -78,8 +82,8 @@ class php5 {
 			value  => 'vagrant',
 			target => '/etc/php5/mods-available/xdebug.ini';
 		'xdebug-xdebug_profiler_enable_trigger':
-			entry => 'xdebug/xdebug.profiler_enable_trigger',
-			value => '1',
+			entry  => 'xdebug/xdebug.profiler_enable_trigger',
+			value  => '1',
 			target => '/etc/php5/mods-available/xdebug.ini';
 	}
 
@@ -93,6 +97,13 @@ class php5 {
 		command => '/usr/bin/pecl install xdebug',
 		unless  => '/usr/bin/test -f /usr/lib/php5/*/xdebug.so',
 		require => [Package['php-pear'], Package['php5-dev']],
+	}
+
+	exec { 'enablePhpXdebug':
+		command => '/usr/sbin/php5enmod xdebug',
+		unless  => '/usr/bin/test -f /etc/php5/fpm/conf.d/20-xdebug.ini',
+		require => [Exec['installPhpXdebug'], Php::Augeas['xdebug-zend_extension']],
+		notify  => Service['php5-fpm'],
 	}
 
 	exec { 'installPhpUnit':

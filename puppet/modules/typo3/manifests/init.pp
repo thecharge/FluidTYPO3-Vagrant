@@ -119,7 +119,7 @@ class typo3 {
 
 	file { "${document_root}/typo3conf/AdditionalConfiguration.php":
 		ensure  => present,
-		source  => "${document_root}/typo3conf/ext/fluidcontent_core/Build/AdditionalConfiguration.php",
+		source  => "${document_root}/typo3conf/ext/fluidcontent_core/Resources/Private/Configuration/AdditionalConfiguration.php",
 		require => Load_extension['fluidcontent_core'],
 	}
 

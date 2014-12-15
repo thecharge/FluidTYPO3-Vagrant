@@ -64,17 +64,12 @@ location /OpCacheGUI {
 		fastcgi_index index.php;
 		fastcgi_intercept_errors on;
 	}
-
-	location /OpCacheGUI/ {
-		try_files $uri $uri/ /OpCacheGUI/index.php$is_args$args;
-	}
 }
 
-location ~ ^/opcache-dashboard.php$ {
+location = /opcache-dashboard.php {
 	fastcgi_pass php-fpm;
 	include fastcgi_params;
-	fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	fastcgi_param SCRIPT_FILENAME /usr/share/php/$uri;
+	fastcgi_param SCRIPT_FILENAME /usr/share/php/opcache-dashboard.php;
 	fastcgi_index index.php;
 	fastcgi_intercept_errors on;
 }

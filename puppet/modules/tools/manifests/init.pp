@@ -25,6 +25,11 @@ class tools {
 		require  => Package['php5-common'],
 	}
 
+	file { '/usr/share/php/OpCacheGUI/init.example.php':
+		content => template('tools/opcachegui.erb'),
+		require => Vcsrepo['/usr/share/php/OpCacheGUI'],
+	}
+
 	vcsrepo { '/usr/share/php/webgrind':
 		ensure   => latest,
 		revision => 'master',

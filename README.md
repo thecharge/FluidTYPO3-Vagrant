@@ -22,7 +22,7 @@ Also this project is in a early state and you need to fill a issue report.
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
 - webgrind - Xdebug profiler gui http://dev.fluidtypo3.org/webgrind
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
-+ Opcache Stats (3 different tools)
++ Opcache Stats (two different tools)
     * Opcache http://dev.fluidtypo3.org/opcache-dashboard.php
     * OpCacheGUI http://dev.fluidtypo3.org/OpCacheGUI
 + roundcubemail http://dev.fluidtypo3.org/webmail - All mails are send to development@localhost

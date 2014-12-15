@@ -4,7 +4,7 @@ class nginx {
 		ensure => purged,
 	}
 
-	file { '/var/log/php-fpm':
+	file { '/var/log/php5':
 		ensure => directory,
 	}
 

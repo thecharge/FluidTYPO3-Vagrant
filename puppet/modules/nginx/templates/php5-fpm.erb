@@ -1,3 +1,6 @@
+[global]
+error_log = /var/log/php5/fpm-error.log
+
 [vagrant]
 listen = /var/run/php-fpm-vagrant.socket
 listen.backlog = -1
@@ -7,7 +10,10 @@ listen.mode=0660
 user = vagrant
 group = vagrant
 request_slowlog_timeout = 5s
-slowlog = /var/log/php-fpm/slowlog-site.log
+access.log = /var/log/php5/access.log
+access.format = "%t \"%m %r%Q%q\" %s %{mili}dms %{kilo}Mkb %C%%"
+catch_workers_output = yes
+slowlog = /var/log/php5/slow.log
 pm = dynamic
 pm.max_children = 75
 pm.start_servers = 10
@@ -19,6 +25,8 @@ request_terminate_timeout = 600s
 rlimit_files = 131072
 rlimit_core = unlimited
 catch_workers_output = yes
+php_admin_flag[log_errors] = true
+php_admin_value[error_log] = /var/log/php5/error.log
 env[HOSTNAME] = $HOSTNAME
 env[TMP] = /tmp
 env[TMPDIR] = /tmp

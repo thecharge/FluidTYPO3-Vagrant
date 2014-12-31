@@ -31,6 +31,7 @@ Also this project is in a early state and you need to fill a issue report.
 - Codesniffer with FluidTYPO3 standard
 - PHPunit for testing
 - Composer
+- Php-fpm status/ping
 
 ### Codesniffer example
 ```shell
@@ -75,6 +76,12 @@ Activate in PhpStorm/IDEA ´´´Start Listening for PHP Debug Connections´´´ 
 #### Webgrind profiler
 Activate the profiler function of the addon. Instead of a browser-extension ?XDEBUG_PROFILE as GET parameter is also possible.
 
+#### Php-fpm Status
+Available under server-status and server-ping. "server-status" accepted params for different formats and pull report.
+
+- Formats ?json, ?html, ?xml
+- Full report ?full (Example http://dev.fluidtypo3.org/server-status?full&html )
+
 ### FAQ
 
 #### Do we support Windows as host?
@@ -90,6 +97,9 @@ Activate the profiler function of the addon. Instead of a browser-extension ?XDE
 
 #### Encrypted disk
 - NFS does not support encrypted host storage as mount.
+
+#### Vagrant up fails
+- A lot of git master and development branches are used. It is possible a resource is offline or is broken.
 
 ### Warning
 - Puppet Vscrepo is patched to allow depth with a branch option

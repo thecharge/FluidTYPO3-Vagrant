@@ -1,4 +1,7 @@
-# FluidTYPO3 Vagrant
+<img src="https://fluidtypo3.org/logo.svgz" width="100%" />
+
+FluidTYPO3 Vagrant
+======================
 
 ## What it does?
 Create a Debian based Virtualbox VM and install TYPO3 and a few helper tools.

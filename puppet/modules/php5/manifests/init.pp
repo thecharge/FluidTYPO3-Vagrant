@@ -48,7 +48,7 @@ class php5 {
 			value => '240';
 		'php-open_basedir':
 			entry => 'PHP/open_basedir',
-			value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp";
+			value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp:/usr/bin";
 		'php-upload_tmp_dir':
 			entry => 'PHP/upload_tmp_dir',
 			value => '/tmp';

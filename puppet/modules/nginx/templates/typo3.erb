@@ -22,7 +22,7 @@
 
 	client_max_body_size 100M;
 
-	location ~* ^.+\.(?:css|cur|js|jpe?g|gif|ico|png|html|xml)$ {
+	location ~* ^.+\.(?:css|cur|js|jpe?g|gif|ico|png)$ {
 		expires 4w;
 		add_header Pragma public;
 		add_header Cache-Control "public, must-revalidate, proxy-revalidate";

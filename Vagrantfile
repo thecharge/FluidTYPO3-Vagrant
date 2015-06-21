@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 					mount_options: ['rw', 'vers=3', 'udp', 'noatime', 'fsc']
 		else
 			config.vm.synced_folder Configuration['Mount']['from'] ||= 'www', Configuration['Mount']['to'] ||= '/var/www', id: 'fluidTYPO3', type: 'nfs',
-					mount_options: ['rw', 'vers=3' 'udp', 'noatime']
+					mount_options: ['rw', 'vers=3', 'udp', 'noatime']
 		end
 	else
 		# Windows without NFS

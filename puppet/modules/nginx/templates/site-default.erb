@@ -24,11 +24,12 @@ server {
 	add_header X-Content-Type-Options nosniff;
 
 	location ~ \.php$ {
-		fastcgi_pass php-fpm;
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_index index.php;
 		include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass php-fpm;
+		fastcgi_index index.php;
 		fastcgi_read_timeout 600;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 	}
 
 	include includes/typo3.conf;

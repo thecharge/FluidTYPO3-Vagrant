@@ -37,6 +37,9 @@ class php5 {
 		'php-post_max_size':
 			entry => 'PHP/post_max_size',
 			value => '256M';
+		'php-max_input_vars':
+			entry => 'PHP/max_input_vars',
+			value => '1500';
 		'php-expose_php':
 			entry => 'PHP/expose_php',
 			value => 'off';
@@ -48,7 +51,7 @@ class php5 {
 			value => '240';
 		'php-open_basedir':
 			entry => 'PHP/open_basedir',
-			value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp:/usr/bin";
+			value => "${document_root}:/usr/share/php5:/usr/share/php:/tmp:/usr/bin:/dev/urandom:/usr/local/local";
 		'php-upload_tmp_dir':
 			entry => 'PHP/upload_tmp_dir',
 			value => '/tmp';

@@ -17,7 +17,7 @@ VirtualMachine:
   fsc: false
 
 TYPO3:
-  branch: TYPO3_6-2
+  branch: TYPO3_7-3
 
 FluidTYPO3:
   branch: development

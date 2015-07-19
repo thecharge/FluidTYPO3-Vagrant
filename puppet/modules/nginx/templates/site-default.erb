@@ -30,7 +30,7 @@ server {
 		fastcgi_index index.php;
 		fastcgi_read_timeout 600;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		SetEnv TYPO3_CONTEXT "Development"
+		fastcgi_param TYPO3_CONTEXT "Development";
 	}
 
 	include includes/typo3.conf;

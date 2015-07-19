@@ -35,9 +35,17 @@ class typo3 {
 			require  => File['/root/.my.cnf'],
 		}
 
+		exec { 'composerTYPO3':
+			cwd => '/var/www/typo3_src',
+			environment => ["COMPOSER_HOME=/home/vagrant/"],
+			command => '/usr/local/bin/composer install',
+			timeout => 0,
+			require => [Mysql::Db['typo3']],
+		}
+
 		exec { 'setupTYPO3':
 			command => "/vagrant/installTYPO3.sh ${document_root}",
-			require => [Mysql::Db['typo3']],
+			require => [Exec['composerTYPO3']],
 			onlyif  => "/usr/bin/test ! -e ${title}/typo3conf/PackageStates.php",
 		}
 	}
@@ -52,11 +60,12 @@ class typo3 {
 
 		exec { "loadTYPO3Extension${title}":
 			cwd     => $document_root,
-			command => "${document_root}/typo3/cli_dispatch.phpsh extbase extension:install ${title}",
+			command => "/bin/rm -f ${document_root}/typo3temp/autoload/autoload_classmap.php && ${document_root}/typo3/cli_dispatch.phpsh extbase extension:install ${title} && /bin/rm -f ${document_root}/typo3temp/autoload/autoload_classmap.php",
 			require => Vcsrepo["${document_root}/typo3conf/ext/${title}"],
 			onlyif  => "/usr/bin/test `/bin/grep '${title}..=' ${document_root}/typo3conf/PackageStates.php -A6 | /bin/grep -c =...active` -eq 0",
 		}
 	}
+
 
 	file { ["${document_root}/typo3temp"]:
 		ensure => directory

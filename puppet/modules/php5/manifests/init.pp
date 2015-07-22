@@ -61,6 +61,10 @@ class php5 {
 		'php-date_timezone':
 			entry => 'Date/date.timezone',
 			value => 'Europe/Berlin';
+		'php-date_timezone-cli':
+			entry => 'Date/date.timezone',
+			value => 'Europe/Berlin',
+			target => '/etc/php5/cli/php.ini';
 		'php-cgi_fix_pathinfo':
 			entry => 'PHP/cgi.fix_pathinfo',
 			value => '0';

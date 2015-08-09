@@ -18,6 +18,7 @@ Also this project is in a early state and you need to fill a issue report.
 5. Have fun :)
 
 ### Features
+- Hostupdater support (vagrant) - Usage of different hostnames
 - Nginx 1.6.x with php-fpm
 - MariaDB 10.1
 - Postfix + Dovecot (IMAP for mail-tests)

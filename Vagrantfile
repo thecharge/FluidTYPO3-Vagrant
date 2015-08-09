@@ -15,8 +15,26 @@ begin
 	Configuration.merge!(YAML.load(File.open(File.join(File.dirname(__FILE__), 'Configuration.yaml'), File::RDONLY).read))
 end
 
+# Check for missing plugins
+required_plugins = %w(vagrant-hostsupdater)
+plugin_installed = false
+required_plugins.each do |plugin|
+	unless Vagrant.has_plugin?(plugin)
+		system "vagrant plugin install #{plugin}"
+		plugin_installed = true
+	end
+end
+
+# If new plugins installed, restart Vagrant process
+if plugin_installed === true
+	exec "vagrant #{ARGV.join' '}"
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.box = 'puphpet/debian75-x64'
+
+	config.vm.hostname = Configuration['VirtualMachine']['domain'] ||= 'dev.fluidtypo3.org'
+	config.hostsupdater.remove_on_suspend = true
 
 	# Activate if your box need to be available in local network
 	if Configuration['VirtualMachine']['networkBridge'] ||= false

@@ -1,5 +1,9 @@
 class { '::mysql::server':
-	root_password => 'password'
+	root_password => 'password',
+	override_options => {
+		mysqld => { bind-address => '0.0.0.0'}
+	},
+	restart => true,
 }
 
 include apt

@@ -27,12 +27,40 @@ class typo3 {
 		}
 
 		mysql::db { 'typo3':
+			ensure   => 'present',
 			user     => 'typo3',
 			password => 'password',
 			host     => 'localhost',
 			grant    => ['all'],
 			charset  => 'utf8',
-			require  => File['/root/.my.cnf'],
+		}
+
+		mysql_user { "typo3@%":
+			ensure => present,
+			password_hash => mysql_password("password"),
+			require => [Mysql::Db['typo3']],
+		}
+
+		mysql_grant { 'typo3@%/*.*':
+			ensure     => 'present',
+			options    => ['GRANT'],
+			privileges => ['ALL'],
+			table      => 'typo3.*',
+			user       => 'typo3@%',
+			require => [Mysql::Db['typo3']],
+		}
+
+		mysql_user { "root@%":
+			ensure => present,
+			password_hash => mysql_password("password"),
+			require => [Mysql::Db['typo3']],
+		}
+
+		mysql_grant { "root@%/*.*":
+			user => 'root@%',
+			privileges => "all",
+			table      => '*.*',
+			require => Mysql_user["root@%"],
 		}
 
 		exec { 'composerTYPO3':
@@ -90,7 +118,7 @@ class typo3 {
 	}
 
 	load_typo3 { $document_root:
-		require => [Package['curl'], Service['nginx'], Service['php5-fpm'], Mount["${document_root}/typo3temp"]]
+		require => [Package['curl'], Service['mysql'], Service['nginx'], Service['php5-fpm'], Mount["${document_root}/typo3temp"]],
 	}
 
 	exec { 'removeTYPO3ExtensionCsc':

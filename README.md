@@ -18,9 +18,9 @@ Also this project is in a early state and you need to fill a issue report.
 5. Have fun :)
 
 ### Features
-- Hostupdater support (vagrant) - Usage of different hostnames
-- Nginx 1.6.x with php-fpm
-- MariaDB 10.1
+- Hostupdater support (vagrant) allows to use domain (Configuration.yaml) without dns available
+- Nginx 1.8.x with php-fpm
+- MariaDB 10.1 (remote conncetion configured root & typo3)
 - Postfix + Dovecot (IMAP for mail-tests)
 - zsh with grml
 - github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
@@ -31,7 +31,7 @@ Also this project is in a early state and you need to fill a issue report.
     * OpCacheGUI http://dev.fluidtypo3.org/OpCacheGUI
 + roundcubemail http://dev.fluidtypo3.org/webmail - All mails are send to development@localhost
     * Login via development Password password
-- Cronjob for scheduler
+- Cronjob setup for scheduler
 - Codesniffer with FluidTYPO3 standard
 - PHPunit for testing
 - Composer

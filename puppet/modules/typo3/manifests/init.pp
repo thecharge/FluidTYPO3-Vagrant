@@ -126,12 +126,6 @@ class typo3 {
 		require => Load_extension['flux'],
 	}
 
-	file { "${document_root}/typo3conf/AdditionalConfiguration.php":
-		ensure  => present,
-		source  => "${document_root}/typo3conf/ext/fluidcontent_core/Resources/Private/Configuration/AdditionalConfiguration.php",
-		require => Load_extension['fluidcontent_core'],
-	}
-
 	exec { 'addSite':
 		command => "/usr/bin/mysql --user='typo3' --password='password' --database='typo3' --execute=\"INSERT INTO pages (uid, pid, t3ver_oid, t3ver_id, t3ver_wsid, t3ver_label, t3ver_state, t3ver_stage, t3ver_count, t3ver_tstamp, t3ver_move_id, t3_origuid, tstamp, sorting, deleted, perms_userid, perms_groupid, perms_user, perms_group, perms_everybody, editlock, crdate, cruser_id, hidden, title, doktype, TSconfig, storage_pid, is_siteroot, php_tree_stop, tx_impexp_origuid, url, starttime, endtime, urltype, shortcut, shortcut_mode, no_cache, fe_group, subtitle, layout, url_scheme, target, media, lastUpdated, keywords, cache_timeout, cache_tags, newUntil, description, no_search, SYS_LASTCHANGED, abstract, module, extendToSubpages, author, author_email, nav_title, nav_hide, content_from_pid, mount_pid, mount_pid_ol, alias, l18n_cfg, fe_login_mode, backend_layout, backend_layout_next_level, categories, tx_fluidpages_templatefile, tx_fluidpages_layout, tx_fed_page_flexform, tx_fed_page_flexform_sub, tx_fed_page_controller_action, tx_fed_page_controller_action_sub) VALUES
  (1, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, UNIX_TIMESTAMP(), 128, 0, 1, 0, 31, 27, 0, 0, UNIX_TIMESTAMP(), 1, 0, 'Homepage', 1, '', 0, 1, 0, 0, '', 0, 0, 1, 0, 0, 0, '', '', 0, 0, '', '0', 0, '', 0, '', 0, '', 0, 0, '', '', 0, '', '', '', 0, 0, 0, 0, '', 0, 0, 'fluidpages__fluidpages', 'fluidpages__fluidpages', 0, NULL, NULL, NULL, NULL, '', '');\"" ,

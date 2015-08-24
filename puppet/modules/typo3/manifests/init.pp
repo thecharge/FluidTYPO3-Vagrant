@@ -41,7 +41,7 @@ class typo3 {
 			require => [Mysql::Db['typo3']],
 		}
 
-		mysql_grant { 'typo3@%/*.*':
+		mysql_grant { 'typo3@%/typo3.*':
 			ensure     => 'present',
 			options    => ['GRANT'],
 			privileges => ['ALL'],

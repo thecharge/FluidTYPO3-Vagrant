@@ -15,7 +15,7 @@ class mail {
 	file { ['/home/development/mail']:
 		ensure  => 'directory',
 		owner   => 'development',
-		group   => 'development',
+		group   => 'mail',
 		require => User['development'],
 	}
 

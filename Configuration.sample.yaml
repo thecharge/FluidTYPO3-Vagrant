@@ -16,12 +16,6 @@ VirtualMachine:
   # NFS CacheFiles NFS cache for more performance - works only after first provision
   fsc: false
 
-TYPO3:
-  branch: master
-
-FluidTYPO3:
-  branch: development
-
 Mount:
   # Local folder
   from: www

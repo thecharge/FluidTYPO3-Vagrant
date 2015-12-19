@@ -18,12 +18,16 @@ Also this project is in a early state and you need to fill a issue report.
 5. Have fun :)
 
 ### Features
+- Composer Setup TYPO3 local
+- Debian Jessie (8.x.x)
 - Hostupdater support (vagrant) allows to use domain (Configuration.yaml) without dns available
+- VBguest updater, because jessie minimal comes without guest extension
 - Nginx 1.8.x with php-fpm
+- PHP 7
 - MariaDB 10.1 (remote conncetion configured root & typo3)
 - Postfix + Dovecot (IMAP for mail-tests)
+- SPDY SSL (selfsinged)
 - zsh with grml
-- github sources (TYPO3, Webgrind, Rouncubemail, phpMyAdmin, OpCacheGUI, FluidTYPO3)
 - webgrind - Xdebug profiler gui http://dev.fluidtypo3.org/webgrind
 - phpMyAdmin - http://dev.fluidtypo3.org/phpMyAdmin
 + Opcache Stats (two different tools)
@@ -102,9 +106,5 @@ Available under server-status and server-ping. "server-status" accepted params f
 #### Encrypted disk
 - NFS does not support encrypted host storage as mount.
 
-#### Vagrant up fails
-- A lot of git master and development branches are used. It is possible a resource is offline or is broken.
-
 ### Warning
-- Puppet Vscrepo is patched to allow depth with a branch option
 - Puppet MySQL module is patched to allow Debian MariaDB

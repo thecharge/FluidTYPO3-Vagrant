@@ -4,10 +4,10 @@ class shell {
 		ensure => present
 	}
 
-	define    setzsh {
+	define  setzsh {
 		user { $title:
 			ensure => present,
-			shell  => '/bin/zsh',
+			shell  => '/usr/bin/zsh',
 		}
 	}
 

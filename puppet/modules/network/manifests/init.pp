@@ -8,13 +8,8 @@ class network {
 		ip     => '127.0.0.1',
 	}
 
-	file { '/etc/hostname':
-		content => "${fqdn}",
-		notify  => Service['hostname.sh'],
-	}
-
-	service { 'hostname.sh':
-		ensure => running,
+	exec { 'hostname':
+		command => "/usr/bin/hostnamectl set-hostname ${fqdn}",
 	}
 
 	file { '/etc/default/cachefilesd':

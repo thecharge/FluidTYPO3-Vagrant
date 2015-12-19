@@ -3,6 +3,8 @@ Vagrant.require_version ">= 1.6.2"
 
 require 'yaml'
 
+
+
 Configuration = YAML.load(File.open(File.join(File.dirname(__FILE__), 'Configuration.sample.yaml'), File::RDONLY).read)
 if File.file?File.join(File.dirname(__FILE__),'Configuration.yaml')
 else
@@ -16,7 +18,7 @@ begin
 end
 
 # Check for missing plugins
-required_plugins = %w(vagrant-hostsupdater)
+required_plugins = %w(vagrant-hostsupdater vagrant-vbguest)
 plugin_installed = false
 required_plugins.each do |plugin|
 	unless Vagrant.has_plugin?(plugin)
@@ -30,8 +32,14 @@ if plugin_installed === true
 	exec "vagrant #{ARGV.join' '}"
 end
 
+system("
+    if [ #{ARGV[0]} = 'up' ]; then
+        #{File.dirname(__FILE__)}/utils/composer.sh #{File.dirname(__FILE__)}/#{Configuration['Mount']['from']}
+    fi
+")
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	config.vm.box = 'puphpet/debian75-x64'
+	config.vm.box = 'debian/jessie64'
 
 	config.vm.hostname = Configuration['VirtualMachine']['domain'] ||= 'dev.fluidtypo3.org'
 	config.hostsupdater.remove_on_suspend = true
@@ -43,10 +51,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	# Change ip: '172.23.23.23' to run more than one VM or replace it with type: 'dhcp' if you need
 	config.vm.network 'private_network', ip: Configuration['VirtualMachine']['ip'] ||= '172.23.23.23'
-
-	# If true, then any SSH connections made will enable agent forwarding.
-	# Default value: false
-	config.ssh.forward_agent = true
 
 	#Disable default mount
 	config.vm.synced_folder '.', '/vagrant', :disabled => true
@@ -73,11 +77,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		vb.customize ['modifyvm', :id, '--memory', Configuration['VirtualMachine']['memory'] ||= '2048']
 		vb.customize ['modifyvm', :id, '--cpus', Configuration['VirtualMachine']['cpus'] ||= '2']
 		vb.customize ['modifyvm', :id, '--ioapic', 'on']
-	end
+  end
+
+	config.vm.provision 'shell', inline: 'apt-get install --yes puppet &> /dev/null'
 
 	config.vm.provision :puppet do |puppet|
+		puppet.synced_folder_type = "nfs"
 		puppet.manifests_path = 'puppet/manifests'
-		puppet.manifest_file  = 'base.pp'
 		puppet.module_path    = 'puppet/modules'
 		if Configuration['VirtualMachine']['puppetDebug'] ||= false
 			puppet.options = '--debug --verbose --hiera_config /vagrant/hiera.yaml'
@@ -85,14 +91,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			puppet.options = '--hiera_config /vagrant/hiera.yaml'
 		end
 		puppet.facter = {
-			'apt_proxy' => Configuration['VirtualMachine']['aptProxy'] ||= '',
-			'fluidtypo3_branch' => Configuration['FluidTYPO3']['branch'] ||= 'development',
-			'document_root' => Configuration['Mount']['to'] ||= '/var/www',
-			'fqdn' => Configuration['VirtualMachine']['domain'] ||= 'dev.fluidtypo3.org',
-			'typo3_branch' => Configuration['TYPO3']['branch'] ||= 'TYPO3_6-2',
-			'operatingsystem' => 'Debian',
-			'osfamily' => 'Debian',
-			'osversion' => 'wheezy',
+				:apt_proxy => Configuration['VirtualMachine']['aptProxy'] ||= '',
+				:document_root => Configuration['Mount']['to'] ||= '/var/www',
+				:fqdn => Configuration['VirtualMachine']['domain'] ||= 'dev.fluidtypo3.org',
+				:operatingsystem => 'Debian',
+				:osfamily => 'Debian',
+				:osversion => 'jessie',
 		}
 	end
 	config.vm.provision 'shell', path: 'utils/afterStart.sh',  :privileged => false, :run => 'always'

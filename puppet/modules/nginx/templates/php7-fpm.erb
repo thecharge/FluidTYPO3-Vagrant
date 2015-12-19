@@ -1,0 +1,33 @@
+[global]
+error_log = /var/log/php/fpm-error.log
+
+[vagrant]
+listen = /var/run/php-fpm-vagrant.socket
+listen.backlog = -1
+listen.owner = vagrant
+listen.group = www-data
+listen.mode=0660
+user = vagrant
+group = vagrant
+request_slowlog_timeout = 5s
+access.log = /var/log/php/access.log
+access.format = "%t \"%m %r%Q%q\" %s %{mili}dms %{kilo}Mkb %C%%"
+catch_workers_output = yes
+slowlog = /var/log/php/slow.log
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.max_requests = 500
+pm.status_path = /server-status
+request_terminate_timeout = 600s
+rlimit_files = 131072
+rlimit_core = unlimited
+ping.path = /server-ping
+php_admin_flag[log_errors] = true
+php_admin_value[error_log] = /var/log/php/error.log
+env[HOSTNAME] = $HOSTNAME
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp

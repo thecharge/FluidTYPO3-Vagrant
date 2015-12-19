@@ -1,42 +1,33 @@
 class tools {
 
-	vcsrepo { '/usr/share/php/phpMyAdmin':
-		ensure   => latest,
-		revision => 'STABLE',
-		provider => git,
-		source   => 'https://github.com/phpmyadmin/phpmyadmin.git',
-		depth    => '1',
-		require  => Package['php5-common'],
+	exec { 'phpMyAdmin':
+		command  => '/usr/bin/git clone --single-branch --depth 1 --branch STABLE https://github.com/phpmyadmin/phpmyadmin.git /usr/share/php/phpMyAdmin',
+		unless  => '/usr/bin/test -f /usr/share/php/phpMyAdmin/index.php',
+		require  => Package['php7.0-common'],
 	}
 
 	exec { 'opcache-dashboard':
 		cwd     => '/usr/share/php',
 		command => '/usr/bin/wget https://raw.githubusercontent.com/carlosbuenosvinos/opcache-dashboard/master/opcache.php -O opcache-dashboard.php',
 		unless  => '/usr/bin/test -f /usr/share/php/opcache-dashboard.php',
-		require => Package['php5-common'],
+		require => Package['php7.0-common'],
 	}
 
-	vcsrepo { '/usr/share/php/OpCacheGUI':
-		ensure   => latest,
-		revision => 'master',
-		provider => git,
-		source   => 'https://github.com/PeeHaa/OpCacheGUI.git',
-		depth    => '1',
-		require  => Package['php5-common'],
+	exec { 'OpCacheGUI':
+		command  => '/usr/bin/git clone --single-branch --depth 1 --branch master https://github.com/PeeHaa/OpCacheGUI.git /usr/share/php/OpCacheGUI',
+		unless  => '/usr/bin/test -f /usr/share/php/OpCacheGUI/index.php',
+		require  => Package['php7.0-common'],
 	}
 
 	file { '/usr/share/php/OpCacheGUI/init.example.php':
 		content => template('tools/opcachegui.erb'),
-		require => Vcsrepo['/usr/share/php/OpCacheGUI'],
+		require => Exec['OpCacheGUI'],
 	}
 
-	vcsrepo { '/usr/share/php/webgrind':
-		ensure   => latest,
-		revision => 'master',
-		provider => git,
-		source   => 'https://github.com/jokkedk/webgrind.git',
-		depth    => '1',
-		require  => Package['php5-common'],
+	exec { 'webgrind':
+		command  => '/usr/bin/git clone --single-branch --depth 1 --branch master https://github.com/jokkedk/webgrind.git /usr/share/php/webgrind',
+		unless  => '/usr/bin/test -f /usr/share/php/webgrind/index.php',
+		require  => Package['php7.0-common'],
 	}
 
 	file { '/usr/local/bin/dot':
@@ -45,13 +36,10 @@ class tools {
 		require => Package['graphviz'],
 	}
 
-	vcsrepo { '/usr/share/php/roundcubemail':
-		ensure   => latest,
-		revision => 'master',
-		provider => git,
-		source   => 'https://github.com/roundcube/roundcubemail.git',
-		depth    => '1',
-		require  => Package['php5-common'],
+	exec { 'roundcubemail':
+		command  => '/usr/bin/git clone --single-branch --depth 1 --branch master https://github.com/roundcube/roundcubemail.git /usr/share/php/roundcubemail',
+		unless  => '/usr/bin/test -f /usr/share/php/roundcubemail/index.php',
+		require  => Package['php7.0-common'],
 	}
 
 	mysql::db { 'roundcube':
@@ -65,7 +53,7 @@ class tools {
 
 	exec { 'roundcube-sql-import':
 		command => '/usr/bin/mysql -u roundcube -ppassword roundcube < /usr/share/php/roundcubemail/SQL/mysql.initial.sql',
-		require => [Vcsrepo['/usr/share/php/roundcubemail'], Mysql::Db['roundcube']],
+		require => [Exec['roundcubemail'], Mysql::Db['roundcube']],
 		onlyif  => '/usr/bin/test ! -e /usr/share/php/roundcubemail/config/config.inc.php',
 	}
 
@@ -76,7 +64,7 @@ class tools {
 
 	file { ['/usr/share/php/roundcubemail/temp', '/usr/share/php/roundcubemail/logs']:
 		mode    => '0777',
-		require => Vcsrepo['/usr/share/php/roundcubemail'],
+		require => Exec['roundcubemail'],
 	}
 
 }

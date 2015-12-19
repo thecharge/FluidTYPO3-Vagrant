@@ -1,29 +1,32 @@
 class nginx {
 
-	package { [ 'apache2-mpm-prefork', 'apache2-utils', 'apache2.2-bin', 'apache2.2-common', 'libapache2-mod-php5' ]:
+	package { [ 'apache2-mpm-prefork', 'apache2-utils', 'apache2-bin', 'apache2.2-common']:
 		ensure => purged,
+		notify => Service['apache2'],
 	}
 
-	file { '/var/log/php5':
+	file { '/var/log/php':
 		ensure => directory,
 	}
 
-	file { '/etc/php5/fpm/pool.d/www.conf':
+	file { '/etc/php/7.0/fpm/pool.d/www.conf':
 		ensure => absent,
-		notify => Service['php5-fpm'],
+		notify => Service['php7.0-fpm'],
 	}
 
-	file { '/etc/php5/fpm/pool.d/vagrant.conf':
-		content => template('nginx/php5-fpm.erb'),
-		notify  => Service['php5-fpm'],
+	file { '/etc/php/7.0/fpm/pool.d/vagrant.conf':
+		content => template('nginx/php7-fpm.erb'),
+		notify  => Service['php7.0-fpm'],
 	}
 
-	package { [ 'nginx', 'nginx-full', 'nginx-common']:
+	package { ['nginx-common', 'nginx-full', 'nginx' ]:
 		ensure => latest,
+		require => Service['apache2'],
 	}
 
 	file { '/etc/nginx/includes':
 		ensure => directory,
+		require => Package['nginx-common'],
 	}
 
 	file { '/etc/nginx/nginx.conf':
@@ -53,6 +56,10 @@ class nginx {
 	service { 'nginx':
 		ensure  => running,
 		require => Package['nginx'],
+	}
+
+	service { 'apache2':
+		ensure => 'stopped',
 	}
 
 	file { "${document_root}/index.html":

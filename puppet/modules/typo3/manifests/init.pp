@@ -1,29 +1,9 @@
 class typo3 {
 
 	define load_typo3 {
-		vcsrepo { "${title}/typo3_src":
-			ensure   => latest,
-			revision => $typo3_branch,
-			provider => git,
-			source   => "https://github.com/TYPO3/TYPO3.CMS.git",
-			depth    => 1,
-		}
-
-		exec { 'typo3symlinks':
-			cwd     => $title,
-			command => '/bin/ln -sf typo3_src/index.php && /bin/ln -sf typo3_src/typo3',
-			require => Vcsrepo["${title}/typo3_src"],
-			onlyif  => ["/usr/bin/test ! -L ${title}/index.php","/usr/bin/test ! -L ${title}/typo3"],
-		}
-
-		file { [ "${title}/typo3conf", "${title}/typo3conf/ext" ]:
-			ensure => directory
-		}
-
 		file { "${title}/typo3conf/ENABLE_INSTALL_TOOL":
 			ensure  => present,
 			content => '',
-			require => File["${title}/typo3conf"],
 		}
 
 		mysql::db { 'typo3':
@@ -47,7 +27,7 @@ class typo3 {
 			privileges => ['ALL'],
 			table      => 'typo3.*',
 			user       => 'typo3@%',
-			require => [Mysql::Db['typo3']],
+			require => [Mysql_user['typo3@%']],
 		}
 
 		mysql_user { "root@%":
@@ -63,33 +43,17 @@ class typo3 {
 			require => Mysql_user["root@%"],
 		}
 
-		exec { 'composerTYPO3':
-			cwd => '/var/www/typo3_src',
-			environment => ["COMPOSER_HOME=/home/vagrant/"],
-			command => '/usr/local/bin/composer install',
-			timeout => 0,
-			require => [Mysql::Db['typo3']],
-		}
-
 		exec { 'setupTYPO3':
 			command => "/vagrant/installTYPO3.sh ${document_root}",
-			require => [Exec['composerTYPO3']],
+			require => [Mysql::Db['typo3']],
 			onlyif  => "/usr/bin/test ! -e ${title}/typo3conf/PackageStates.php",
 		}
 	}
 
 	define load_extension {
-		vcsrepo { "${document_root}/typo3conf/ext/${title}":
-			ensure   => latest,
-			provider => git,
-			revision => $fluidtypo3_branch,
-			source   => "https://github.com/FluidTYPO3/${title}.git",
-		}
-
 		exec { "loadTYPO3Extension${title}":
 			cwd     => $document_root,
 			command => "/bin/rm -f ${document_root}/typo3temp/autoload/autoload_classmap.php && ${document_root}/typo3/cli_dispatch.phpsh extbase extension:install ${title} && /bin/rm -f ${document_root}/typo3temp/autoload/autoload_classmap.php",
-			require => Vcsrepo["${document_root}/typo3conf/ext/${title}"],
 			onlyif  => "/usr/bin/test `/bin/grep '${title}..=' ${document_root}/typo3conf/PackageStates.php -A6 | /bin/grep -c =...active` -eq 0",
 		}
 	}
@@ -109,16 +73,16 @@ class typo3 {
 		remounts => false,
 	}
 
-	vcsrepo { '/usr/share/php/PHP/CodeSniffer/Standards/FluidTYPO3':
-		ensure   => latest,
-		revision => master,
-		provider => git,
-		source   => 'https://github.com/FluidTYPO3/FluidTYPO3-CodingStandards.git',
-		require  => Exec['installPhpcs'],
-	}
+#	vcsrepo { '/usr/share/php/PHP/CodeSniffer/Standards/FluidTYPO3':
+#		ensure   => latest,
+#		revision => master,
+#		provider => git,
+#		source   => 'https://github.com/FluidTYPO3/FluidTYPO3-CodingStandards.git',
+#		require  => Exec['installPhpcs'],
+#	}
 
 	load_typo3 { $document_root:
-		require => [Package['curl'], Service['mysql'], Service['nginx'], Service['php5-fpm'], Mount["${document_root}/typo3temp"]],
+		require => [Package['curl'], Service['mysql'], Service['nginx'], Service['php7.0-fpm'], Mount["${document_root}/typo3temp"]],
 	}
 
 	exec { 'removeTYPO3ExtensionCsc':
@@ -150,7 +114,7 @@ class typo3 {
 		require => Load_extension['vhs'],
 	}
 
-	load_extension { ['builder', 'fluidcontent', 'fluidcontent_core', 'fluidpages']:
+	load_extension { ['builder', 'fluidcontent', 'fluidpages']:
 		require => Load_extension['flux'],
 	}
 
